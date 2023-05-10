@@ -3,4 +3,9 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign In</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="lorem">orem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum nec quam et volutpat. Mauris blandit, massa vitae consectetur mattis, tortor dui dignissim lorem, eget eleifend enim eros ac risus.</string>
+    <string name="email">Email</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
