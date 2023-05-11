@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".AddStoryActivity">
+    tools:context=".ui.AddStoryActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_center"
@@ -21,7 +21,8 @@
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAccessibility="no">
 
     </ImageView>
 
@@ -51,7 +52,9 @@
         android:id="@+id/ed_add_description"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:inputType="text"
         app:layout_constraintTop_toBottomOf="@+id/btn_gallery"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp"
+        android:importantForAutofill="no" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

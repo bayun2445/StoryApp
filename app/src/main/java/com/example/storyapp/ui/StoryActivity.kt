@@ -1,4 +1,4 @@
-package com.example.storyapp
+package com.example.storyapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
