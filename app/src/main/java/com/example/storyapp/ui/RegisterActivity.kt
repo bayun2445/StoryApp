@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.storyapp.api.ApiConfig
-import com.example.storyapp.api.StoryResponse
+import com.example.storyapp.api.SuccessResponse
 import com.example.storyapp.databinding.ActivityRegisterBinding
+import com.example.storyapp.ui.login.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,13 +27,13 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register() {
-        val name = binding.edRegisterUsername.text.toString()
+        val name = binding.edRegisterName.text.toString()
         val email = binding.edRegisterEmail.text.toString()
         val password = binding.edRegisterPassword.text.toString()
 
         val client = ApiConfig.getApiService().register(name, email, password)
-        client.enqueue(object : Callback<StoryResponse> {
-            override fun onResponse(call: Call<StoryResponse>, response: Response<StoryResponse>) {
+        client.enqueue(object : Callback<SuccessResponse> {
+            override fun onResponse(call: Call<SuccessResponse>, response: Response<SuccessResponse>) {
                 Toast.makeText(
                     this@RegisterActivity,
                     "Registrasi Berhasil",
@@ -44,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<StoryResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SuccessResponse>, t: Throwable) {
                 Toast.makeText(
                     this@RegisterActivity,
                     "Registrasi Gagal: ${t.message.toString()}",

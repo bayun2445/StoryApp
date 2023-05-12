@@ -5,9 +5,9 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatEditText
+import com.google.android.material.textfield.TextInputEditText
 
-class MyEditText: AppCompatEditText {
+class MyEditText: TextInputEditText {
     constructor(context: Context): super(context) {
         init()
     }
@@ -49,7 +49,7 @@ class MyEditText: AppCompatEditText {
             val pattern = "[a-zA-Z0-9._-]+@[a-z]+.+[a-z]+"
 
             if (!text.matches(pattern.toRegex())) {
-                error = "Incorrect email format. (user@example.com)"
+                error = "Invalid email format."
             }
         }
     }

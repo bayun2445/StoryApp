@@ -5,40 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="30dp"
-    tools:context=".ui.LoginActivity">
+    tools:context=".ui.login.LoginActivity">
 
-    <com.example.storyapp.components.MyEditText
-        android:id="@+id/ed_register_username"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/il_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/username"
         android:layout_marginTop="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:inputType="text"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toTopOf="parent">
+        <com.example.storyapp.components.MyEditText
+            android:id="@+id/ed_register_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:inputType="text"
+            android:importantForAutofill="no" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.example.storyapp.components.MyEditText
-        android:id="@+id/ed_register_password"
+   <com.google.android.material.textfield.TextInputLayout
+       android:id="@+id/il_password"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/il_name">
+
+       <com.example.storyapp.components.MyEditText
+           android:id="@+id/ed_register_password"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:hint="@string/password"
+           android:inputType="textPassword"
+           android:importantForAutofill="no" />
+   </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/il_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_username"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/il_password">
 
-    <com.example.storyapp.components.MyEditText
-        android:id="@+id/ed_register_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_password"
-        android:importantForAutofill="no" />
+        <com.example.storyapp.components.MyEditText
+            android:id="@+id/ed_register_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:importantForAutofill="no" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
 
     <Button
         android:id="@+id/btn_sign_up"
@@ -46,6 +67,6 @@
         android:layout_height="wrap_content"
         android:text="@string/sign_up"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_email" />
+        app:layout_constraintTop_toBottomOf="@+id/il_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

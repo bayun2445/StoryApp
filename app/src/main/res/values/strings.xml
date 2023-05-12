@@ -10,4 +10,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="preview">Preview</string>
     <string name="description">Description</string>
+    <string name="sign_in_as_guest">Sign In As Guest</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
 </resources>

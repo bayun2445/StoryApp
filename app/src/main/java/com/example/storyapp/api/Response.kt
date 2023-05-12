@@ -2,7 +2,7 @@ package com.example.storyapp.api
 
 import com.google.gson.annotations.SerializedName
 
-data class Response(
+data class LoginResponse(
 
 	@field:SerializedName("loginResult")
 	val loginResult: LoginResult? = null,
@@ -26,7 +26,7 @@ data class LoginResult(
 	val token: String? = null
 )
 
-data class StoryResponse(
+data class SuccessResponse(
 
 	@field:SerializedName("error")
 	val error: Boolean? = null,
@@ -34,3 +34,4 @@ data class StoryResponse(
 	@field:SerializedName("message")
 	val message: String? = null
 )
+
