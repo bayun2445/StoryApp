@@ -53,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:inputType="text"
+        android:hint="@string/description"
         app:layout_constraintTop_toBottomOf="@+id/btn_gallery"
         tools:layout_editor_absoluteX="16dp"
         android:importantForAutofill="no" />

@@ -8,4 +8,6 @@
     <string name="lorem">orem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum nec quam et volutpat. Mauris blandit, massa vitae consectetur mattis, tortor dui dignissim lorem, eget eleifend enim eros ac risus.</string>
     <string name="email">Email</string>
     <string name="sign_up">Sign Up</string>
+    <string name="preview">Preview</string>
+    <string name="description">Description</string>
 </resources>
