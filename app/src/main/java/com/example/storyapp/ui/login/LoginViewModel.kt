@@ -1,19 +1,17 @@
 package com.example.storyapp.ui.login
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.storyapp.api.ApiConfig
 import com.example.storyapp.api.LoginResponse
-import com.example.storyapp.helper.LoginPreference
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginViewModel(private val pref: LoginPreference): ViewModel() {
+class LoginViewModel(val sharedPref: SharedPreferences): ViewModel() {
     private val _toastText = MutableLiveData<String?>()
 
     val toastText: LiveData<String?> = _toastText
@@ -59,16 +57,21 @@ class LoginViewModel(private val pref: LoginPreference): ViewModel() {
     }
 
     private fun storeAuthorizationToken(token: String?) {
-        token?.let {
-            viewModelScope.launch {
-                pref.setLoginToken(it)
-            }
-        }
+//        token?.let {
+//            viewModelScope.launch {
+//                pref.setLoginToken(it)
+//            }
+//        }
+
+        sharedPref.edit()
+            .putString(TOKEN_KEY, token)
+            .apply()
 
         _toastText.value = "Token Stored"
     }
 
     companion object {
         private val TAG = LoginViewModel::class.java.simpleName
+        private const val TOKEN_KEY = "login_token"
     }
 }

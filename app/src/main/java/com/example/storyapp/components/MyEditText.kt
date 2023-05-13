@@ -46,9 +46,7 @@ class MyEditText: TextInputEditText {
                 error = "Password requires 8 or more characters"
             }
         } else if (inputType and InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS > 0) {
-            val pattern = "[a-zA-Z0-9._-]+@[a-z]+.+[a-z]+"
-
-            if (!text.matches(pattern.toRegex())) {
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
                 error = "Invalid email format."
             }
         }

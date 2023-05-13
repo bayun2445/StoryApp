@@ -1,21 +1,16 @@
 package com.example.storyapp.ui.login
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.databinding.ActivityLoginBinding
-import com.example.storyapp.helper.LoginPreference
 import com.example.storyapp.helper.ViewModelFactory
 import com.example.storyapp.ui.RegisterActivity
+import com.example.storyapp.ui.StoryActivity
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "prefs")
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -26,10 +21,10 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val preferences = LoginPreference.getInstance(dataStore)
+        val sharedPreferences = applicationContext.getSharedPreferences(SHARED_PREF_KEY, MODE_PRIVATE)
         viewModel = ViewModelProvider(
             this,
-            ViewModelFactory.getInstance(preferences)
+            ViewModelFactory.getInstance(sharedPreferences)
         )[LoginViewModel::class.java]
 
         setButtonsOnClickListener()
@@ -57,6 +52,10 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.edLoginPassword.text.toString()
 
             viewModel.signIn(email, password)
+
+            Intent(this@LoginActivity, StoryActivity::class.java).also {
+                startActivity(it)
+            }
         }
     }
 
@@ -70,5 +69,6 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = LoginActivity::class.java.simpleName
+        private const val SHARED_PREF_KEY = "story_app_prefs"
     }
 }

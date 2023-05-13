@@ -13,4 +13,5 @@
     <string name="sign_in_as_guest">Sign In As Guest</string>
     <string name="register">Register</string>
     <string name="name">Name</string>
+    <string name="story_activity">Story Activity</string>
 </resources>
