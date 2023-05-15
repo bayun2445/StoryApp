@@ -30,7 +30,7 @@
             android:name=".ui.AddStoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.StoryActivity"
+            android:name=".ui.story.StoryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.RegisterActivity"

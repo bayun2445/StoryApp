@@ -57,12 +57,6 @@ class LoginViewModel(val sharedPref: SharedPreferences): ViewModel() {
     }
 
     private fun storeAuthorizationToken(token: String?) {
-//        token?.let {
-//            viewModelScope.launch {
-//                pref.setLoginToken(it)
-//            }
-//        }
-
         sharedPref.edit()
             .putString(TOKEN_KEY, token)
             .apply()

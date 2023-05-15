@@ -34,21 +34,29 @@ class RegisterActivity : AppCompatActivity() {
         val client = ApiConfig.getApiService().register(name, email, password)
         client.enqueue(object : Callback<SuccessResponse> {
             override fun onResponse(call: Call<SuccessResponse>, response: Response<SuccessResponse>) {
-                Toast.makeText(
-                    this@RegisterActivity,
-                    "Registrasi Berhasil",
-                    Toast.LENGTH_LONG
-                ).show()
+               if (response.body()?.error == false) {
+                   Toast.makeText(
+                       this@RegisterActivity,
+                       "Register success",
+                       Toast.LENGTH_LONG
+                   ).show()
 
-                Intent(this@RegisterActivity, LoginActivity::class.java).also {
-                    startActivity(it)
-                }
+                   Intent(this@RegisterActivity, LoginActivity::class.java).also {
+                       startActivity(it)
+                   }
+               } else {
+                   Toast.makeText(
+                       this@RegisterActivity,
+                       "Register failed: ${response.body()?.message}",
+                       Toast.LENGTH_LONG
+                   ).show()
+               }
             }
 
             override fun onFailure(call: Call<SuccessResponse>, t: Throwable) {
                 Toast.makeText(
                     this@RegisterActivity,
-                    "Registrasi Gagal: ${t.message.toString()}",
+                    "Register failed: ${t.message.toString()}",
                     Toast.LENGTH_LONG
                 ).show()
             }

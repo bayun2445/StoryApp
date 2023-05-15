@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.databinding.ActivityLoginBinding
 import com.example.storyapp.helper.ViewModelFactory
 import com.example.storyapp.ui.RegisterActivity
-import com.example.storyapp.ui.StoryActivity
+import com.example.storyapp.ui.story.StoryActivity
 
 
 class LoginActivity : AppCompatActivity() {
@@ -39,14 +39,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setButtonsOnClickListener() {
 
-        // register
         binding.btnRegister.setOnClickListener {
             Intent(this@LoginActivity, RegisterActivity::class.java).also {
                 startActivity(it)
             }
         }
 
-        // sign in
         binding.btnSignIn.setOnClickListener {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
@@ -54,6 +52,15 @@ class LoginActivity : AppCompatActivity() {
             viewModel.signIn(email, password)
 
             Intent(this@LoginActivity, StoryActivity::class.java).also {
+                startActivity(it)
+            }
+
+            finish()
+        }
+
+        binding.btnSignInGuest.setOnClickListener {
+            Intent(this@LoginActivity, StoryActivity::class.java).also {
+                it.putExtra("isGuest", true)
                 startActivity(it)
             }
         }
