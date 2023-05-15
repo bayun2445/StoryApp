@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.R
 import com.example.storyapp.databinding.ActivityStoryBinding
@@ -29,8 +28,7 @@ class StoryActivity : AppCompatActivity() {
             ViewModelFactory.getInstance(sharedPreferences)
         )[StoryViewModel::class.java]
 
-        val token = intent.getStringExtra("token") ?: "Blank"
-        Toast.makeText(this, token, Toast.LENGTH_LONG).show()
+        val token = intent.getStringExtra("token")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

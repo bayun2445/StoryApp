@@ -7,27 +7,43 @@
     android:padding="30dp"
     tools:context=".ui.login.LoginActivity">
 
+    <TextView
+        android:id="@+id/tv_page_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:textColor="?colorPrimary"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/il_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="488dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tv_page_title">
+
         <com.example.storyapp.components.MyEditText
             android:id="@+id/ed_register_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
-            android:inputType="text"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
    <com.google.android.material.textfield.TextInputLayout
        android:id="@+id/il_password"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
+       android:maxWidth="488dp"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintTop_toBottomOf="@+id/il_name">
@@ -46,6 +62,7 @@
         android:id="@+id/il_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxWidth="488dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/il_password">
 
@@ -59,13 +76,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
     <Button
         android:id="@+id/btn_sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxWidth="320dp"
+        android:layout_marginTop="20dp"
         android:text="@string/sign_up"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/il_email" />
 

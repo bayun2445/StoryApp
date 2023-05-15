@@ -12,9 +12,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel(val sharedPref: SharedPreferences): ViewModel() {
-    private val _toastText = MutableLiveData<String?>()
+    private val _toastText = MutableLiveData<String>()
+    private val _isSucceed = MutableLiveData<Boolean>()
 
-    val toastText: LiveData<String?> = _toastText
+    val toastText: LiveData<String> = _toastText
+    val isSucceed: LiveData<Boolean> = _isSucceed
 
     fun signIn(email: String, password: String) {
         val client = ApiConfig.getApiService().login(email, password)
@@ -24,23 +26,24 @@ class LoginViewModel(val sharedPref: SharedPreferences): ViewModel() {
                 call: Call<LoginResponse>,
                 response: Response<LoginResponse>
             ) {
-                val responseBody = response.body()
-
-                if (responseBody?.error == false) {
-                    val token = responseBody.loginResult?.token
+                response.body()
+                if (response.body()?.error == false) {
+                    val token = response.body()?.loginResult?.token
                     _toastText.value = "Login succeed"
                     Log.d(
                         TAG,
-                        "name: ${responseBody.loginResult?.name}\n" +
-                                "${responseBody.loginResult?.token}\n" +
-                                "userId: ${responseBody.loginResult?.userId}"
+                        "name: ${response.body()?.loginResult?.name}\n" +
+                                "${response.body()?.loginResult?.token}\n" +
+                                "userId: ${response.body()?.loginResult?.userId}"
                     )
                     storeAuthorizationToken(token)
-                } else if (responseBody?.error == true){
-                    _toastText.value = "Login Failed"
+
+                    _isSucceed.value = true
+                } else {
+                    _toastText.value = "Login Failed: ${response.body()?.message}"
                     Log.d(
                         TAG,
-                        "onResponse: Failed. ${responseBody.message}"
+                        "onResponse: Failed. ${response.body()?.message}"
                     )
                 }
             }

@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.databinding.ActivityLoginBinding
 import com.example.storyapp.helper.ViewModelFactory
-import com.example.storyapp.ui.RegisterActivity
+import com.example.storyapp.ui.register.RegisterActivity
 import com.example.storyapp.ui.story.StoryActivity
 
 
@@ -29,10 +29,26 @@ class LoginActivity : AppCompatActivity() {
 
         setButtonsOnClickListener()
 
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
         viewModel.toastText.observe(this) {
-            it?.let {
-                showToast(it)
-                Log.d(TAG, it)
+            Toast.makeText(
+                this@LoginActivity,
+                it,
+                Toast.LENGTH_SHORT
+            ).show()
+            Log.d(TAG, it)
+        }
+
+        viewModel.isSucceed.observe(this) {
+            if (it) {
+                Intent(this@LoginActivity, StoryActivity::class.java).also { intent ->
+                    startActivity(intent)
+                }
+
+                finish()
             }
         }
     }
@@ -50,28 +66,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.edLoginPassword.text.toString()
 
             viewModel.signIn(email, password)
-
-            Intent(this@LoginActivity, StoryActivity::class.java).also {
-                startActivity(it)
-            }
-
-            finish()
         }
-
-        binding.btnSignInGuest.setOnClickListener {
-            Intent(this@LoginActivity, StoryActivity::class.java).also {
-                it.putExtra("isGuest", true)
-                startActivity(it)
-            }
-        }
-    }
-
-    private fun showToast(text: String?) {
-        Toast.makeText(
-            this@LoginActivity,
-            text,
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
     companion object {
