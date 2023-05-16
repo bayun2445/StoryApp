@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".ui.AddStoryActivity">
+    tools:context=".ui.add_story.AddStoryActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_center"
@@ -14,18 +13,31 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/top_bar_menu"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
     <ImageView
         android:id="@+id/iv_photo_preview"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@color/black"
+        android:layout_marginTop="20dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/photo_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:importantForAccessibility="no">
+        app:layout_constraintTop_toBottomOf="@+id/top_bar_menu">
 
     </ImageView>
-
 
     <Button
         android:id="@+id/btn_gallery"
@@ -43,19 +55,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="16dp"
         android:text="@string/camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_center"
         app:layout_constraintTop_toBottomOf="@+id/iv_photo_preview" />
 
-    <EditText
-        android:id="@+id/ed_add_description"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/il_add_description"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:inputType="text"
-        android:hint="@string/description"
-        app:layout_constraintTop_toBottomOf="@+id/btn_gallery"
-        tools:layout_editor_absoluteX="16dp"
-        android:importantForAutofill="no" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_gallery">
+
+        <EditText
+            android:id="@+id/ed_add_description"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:hint="@string/description"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            tools:layout_editor_absoluteX="16dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/il_add_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

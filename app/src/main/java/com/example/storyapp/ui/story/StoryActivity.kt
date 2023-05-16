@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.R
 import com.example.storyapp.databinding.ActivityStoryBinding
 import com.example.storyapp.helper.ViewModelFactory
+import com.example.storyapp.ui.add_story.AddStoryActivity
 import com.example.storyapp.ui.login.LoginActivity
 
 class StoryActivity : AppCompatActivity() {
@@ -28,7 +30,13 @@ class StoryActivity : AppCompatActivity() {
             ViewModelFactory.getInstance(sharedPreferences)
         )[StoryViewModel::class.java]
 
-        val token = intent.getStringExtra("token")
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.toastText.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -46,6 +54,14 @@ class StoryActivity : AppCompatActivity() {
                 }
 
                 finish()
+                true
+            }
+
+            R.id.menu_add -> {
+                Intent(this, AddStoryActivity::class.java).also {
+                    startActivity(it)
+                }
+
                 true
             }
 

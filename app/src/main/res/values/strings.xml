@@ -16,4 +16,6 @@
     <string name="story_activity">Story Activity</string>
     <string name="log_out">Log Out</string>
     <string name="log_in">Log In</string>
+    <string name="add">Add</string>
+    <string name="upload">Upload</string>
 </resources>
