@@ -34,7 +34,7 @@ interface ApiService {
         @Query("page") page: Int? = null,
         @Query("size") size: Int? = null,
         @Query("location") location: Int? = null
-    ): Call<StoryResponse>
+    ): Call<StoryListResponse>
 
     @Multipart
     @POST("v1/stories")

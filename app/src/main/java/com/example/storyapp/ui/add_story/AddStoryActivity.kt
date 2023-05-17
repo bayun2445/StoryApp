@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
@@ -68,6 +69,16 @@ class AddStoryActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        viewModel.isLoading.observe(this) {
+            it?.let {
+                if (it) {
+                    binding.cvLoading.visibility = View.VISIBLE
+                } else {
+                    binding.cvLoading.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -108,7 +119,6 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val TAG = AddStoryActivity::class.java.simpleName
         private const val SHARED_PREF_KEY = "story_app_prefs"
     }
 }

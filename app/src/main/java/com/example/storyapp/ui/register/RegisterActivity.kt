@@ -1,8 +1,8 @@
 package com.example.storyapp.ui.register
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.databinding.ActivityRegisterBinding
@@ -32,6 +32,16 @@ class RegisterActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        viewModel.isLoading.observe(this) {
+            it?.let {
+                if (it) {
+                    binding.cvLoading.visibility = View.VISIBLE
+                } else {
+                    binding.cvLoading.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     private fun seButtonsOnClickListener() {
@@ -42,9 +52,5 @@ class RegisterActivity : AppCompatActivity() {
 
             viewModel.register(name, email, password)
         }
-    }
-
-    companion object {
-        private val TAG = RegisterActivity::class.java.simpleName
     }
 }

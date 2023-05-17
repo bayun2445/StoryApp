@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.databinding.ActivityLoginBinding
@@ -49,6 +50,16 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 finish()
+            }
+        }
+
+        viewModel.isLoading.observe(this) {
+            it?.let {
+                if (it) {
+                    binding.cvLoading.visibility = View.VISIBLE
+                } else {
+                    binding.cvLoading.visibility = View.INVISIBLE
+                }
             }
         }
     }

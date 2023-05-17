@@ -1,7 +1,6 @@
 package com.example.storyapp.ui.add_story
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,11 +19,14 @@ import retrofit2.Response
 class AddStoryViewModel(val sharedPref: SharedPreferences): ViewModel() {
     private val _toastText = MutableLiveData<String>()
     private val _isSucceed = MutableLiveData<Boolean>()
+    private val _isLoading = MutableLiveData<Boolean>()
 
     val toastText: LiveData<String> = _toastText
     val isSucceed: LiveData<Boolean> = _isSucceed
+    val isLoading: LiveData<Boolean> = _isLoading
 
     fun uploadStory(imageFile: File, description: String) {
+        _isLoading.value = true
         val savedToken = sharedPref.getString(TOKEN_KEY, null)
         val bearerToken = "Bearer $savedToken"
 
@@ -46,20 +48,21 @@ class AddStoryViewModel(val sharedPref: SharedPreferences): ViewModel() {
                 if (responseBody?.error == false) {
                     _toastText.value = "Story successfully added"
                     _isSucceed.value = true
+                    _isLoading.value = false
                 } else {
-                    _toastText.value = "Failed: ${responseBody?.message}"
-                    Log.e(TAG, "Failed: ${responseBody?.message}")
+                    _toastText.value = "Failed: ${response.message()}"
+                    _isLoading.value = false
                 }
             }
 
             override fun onFailure(call: Call<SuccessResponse>, t: Throwable) {
-                Log.e(TAG, "Failed: ${t.message}")
+                _toastText.value = "Failed: ${t.message}"
+                _isLoading.value = false
             }
         })
     }
 
     companion object {
-        private val TAG = AddStoryViewModel::class.java.simpleName
         private const val TOKEN_KEY = "login_token"
     }
 }

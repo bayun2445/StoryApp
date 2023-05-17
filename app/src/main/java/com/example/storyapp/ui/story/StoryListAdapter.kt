@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.storyapp.api.ListStoryItem
+import com.example.storyapp.api.StoryItem
 import com.example.storyapp.databinding.ItemStoryBinding
 
-class StoryListAdapter(val listStory: List<ListStoryItem?>):
+class StoryListAdapter(private val listStory: List<StoryItem?>):
     RecyclerView.Adapter<StoryListAdapter.StoryViewHolder>() {
     private lateinit var clicked: ItemCLicked
 
@@ -42,7 +42,7 @@ class StoryListAdapter(val listStory: List<ListStoryItem?>):
             }
         }
 
-        fun bind(story: ListStoryItem) {
+        fun bind(story: StoryItem) {
             Glide.with(itemView.context)
                 .load(story.photoUrl)
                 .centerCrop()

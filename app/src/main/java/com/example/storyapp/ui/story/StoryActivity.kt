@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storyapp.R
-import com.example.storyapp.api.ListStoryItem
+import com.example.storyapp.api.StoryItem
 import com.example.storyapp.databinding.ActivityStoryBinding
 import com.example.storyapp.helper.ViewModelFactory
 import com.example.storyapp.ui.story_detail.StoryDetailActivity
@@ -36,14 +36,8 @@ class StoryActivity : AppCompatActivity() {
         binding.rvStory.layoutManager = LinearLayoutManager(this)
 
         observeViewModel()
-    }
 
-    private fun observeViewModel() {
-        viewModel.toastText.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-        }
-
-        viewModel.listStory.observe(this) { list ->
+        viewModel.listStory.observe(this) { list: List<StoryItem?>? ->
             list?.let {
                 if (it.isNotEmpty()) {
                     loadStoryData(it)
@@ -53,15 +47,27 @@ class StoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadStoryData(list: List<ListStoryItem?>) {
+    override fun onRestart() {
+        viewModel.getAllStories()
+
+        super.onRestart()
+    }
+
+    private fun observeViewModel() {
+        viewModel.toastText.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun loadStoryData(list: List<StoryItem?>) {
         val adapter = StoryListAdapter(list)
 
         adapter.setClicked(object : StoryListAdapter.ItemCLicked {
             override fun click(position: Int) {
-                val id = list[position]?.id
+                val selectedStory = list[position]
 
                 Intent(this@StoryActivity, StoryDetailActivity::class.java).also {
-                    it.putExtra("id", id)
+                    it.putExtra("story",selectedStory)
                     startActivity(it)
                 }
             }
@@ -105,7 +111,6 @@ class StoryActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val TAG = StoryActivity::class.java.simpleName
         private const val SHARED_PREF_KEY = "story_app_prefs"
     }
 }
