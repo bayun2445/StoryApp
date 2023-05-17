@@ -7,9 +7,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storyapp.R
+import com.example.storyapp.api.ListStoryItem
 import com.example.storyapp.databinding.ActivityStoryBinding
 import com.example.storyapp.helper.ViewModelFactory
+import com.example.storyapp.ui.story_detail.StoryDetailActivity
 import com.example.storyapp.ui.add_story.AddStoryActivity
 import com.example.storyapp.ui.login.LoginActivity
 
@@ -30,12 +33,43 @@ class StoryActivity : AppCompatActivity() {
             ViewModelFactory.getInstance(sharedPreferences)
         )[StoryViewModel::class.java]
 
+        binding.rvStory.layoutManager = LinearLayoutManager(this)
+
         observeViewModel()
     }
 
     private fun observeViewModel() {
         viewModel.toastText.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        }
+
+        viewModel.listStory.observe(this) { list ->
+            list?.let {
+                if (it.isNotEmpty()) {
+                    loadStoryData(it)
+                }
+            }
+
+        }
+    }
+
+    private fun loadStoryData(list: List<ListStoryItem?>) {
+        val adapter = StoryListAdapter(list)
+
+        adapter.setClicked(object : StoryListAdapter.ItemCLicked {
+            override fun click(position: Int) {
+                val id = list[position]?.id
+
+                Intent(this@StoryActivity, StoryDetailActivity::class.java).also {
+                    it.putExtra("id", id)
+                    startActivity(it)
+                }
+            }
+        })
+
+        binding.rvStory.apply {
+            this.adapter = adapter
+            setHasFixedSize(true)
         }
     }
 

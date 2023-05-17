@@ -16,13 +16,13 @@ class StoryViewModel(val sharedPref: SharedPreferences): ViewModel() {
     private val _listStory = MutableLiveData<List<ListStoryItem?>?>()
     private val _toastText = MutableLiveData<String?>()
 
-    val listStory: LiveData<List<ListStoryItem?>?> = _listStory
+    val listStory: LiveData<List<ListStoryItem?>?> = _listStory //TODO: Make the list loaded in story activity
     val toastText: LiveData<String?> = _toastText
 
     init {
         getAllStories()
     }
-    private fun getAllStories() {
+    fun getAllStories() {
         val savedToken = sharedPref.getString(TOKEN_KEY, null)
         val bearerToken = "Bearer $savedToken"
 
@@ -33,10 +33,11 @@ class StoryViewModel(val sharedPref: SharedPreferences): ViewModel() {
                 val responseBody = response.body()
 
                 if (responseBody?.error == false) {
-                    _toastText.value = "Load success: ${responseBody.message}"
 
                     _listStory.value = responseBody.listStory
                     Log.d(TAG, responseBody.listStory.toString())
+                    _toastText.value = "Load success: ${responseBody.message}"
+
                 } else {
                     _toastText.value = "Load failed: ${responseBody?.message}"
                     Log.d(TAG, "Load failed: ${responseBody?.message}")

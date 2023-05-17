@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="16dp"
     android:paddingTop="10dp"
-    tools:context=".ui.StoryDetailActivity">
+    tools:context=".ui.story_detail.StoryDetailActivity">
 
     <ImageView
         android:id="@+id/iv_detail_photo"

@@ -31,9 +31,9 @@ interface ApiService {
     @GET("v1/stories")
     fun getAllStories(
         @Header("Authorization") authToken: String,
-        @Query("page") page: Int = 0,
-        @Query("size") size: Int = 0,
-        @Query("location") location: Int = 0
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("location") location: Int? = null
     ): Call<StoryResponse>
 
     @Multipart
