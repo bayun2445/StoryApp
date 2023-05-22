@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storyapp.R
@@ -61,17 +63,6 @@ class StoryActivity : AppCompatActivity() {
 
     private fun loadStoryData(list: List<StoryItem?>) {
         val adapter = StoryListAdapter(list)
-
-        adapter.setClicked(object : StoryListAdapter.ItemCLicked {
-            override fun click(position: Int) {
-                val selectedStory = list[position]
-
-                Intent(this@StoryActivity, StoryDetailActivity::class.java).also {
-                    it.putExtra("story",selectedStory)
-                    startActivity(it)
-                }
-            }
-        })
 
         binding.rvStory.apply {
             this.adapter = adapter

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.databinding.ActivityRegisterBinding
 
@@ -35,11 +36,7 @@ class RegisterActivity : AppCompatActivity() {
 
         viewModel.isLoading.observe(this) {
             it?.let {
-                if (it) {
-                    binding.cvLoading.visibility = View.VISIBLE
-                } else {
-                    binding.cvLoading.visibility = View.INVISIBLE
-                }
+                binding.cvLoading.isVisible = it
             }
         }
     }

@@ -6,10 +6,11 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.example.storyapp.R
 import com.example.storyapp.databinding.ActivityAddStoryBinding
 import com.example.storyapp.helper.ViewModelFactory
 import java.io.File
@@ -20,7 +21,6 @@ class AddStoryActivity : AppCompatActivity() {
 
     private var imageFile: File? = null
 
-    @Suppress("DEPRECATION")
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -72,11 +72,7 @@ class AddStoryActivity : AppCompatActivity() {
 
         viewModel.isLoading.observe(this) {
             it?.let {
-                if (it) {
-                    binding.cvLoading.visibility = View.VISIBLE
-                } else {
-                    binding.cvLoading.visibility = View.INVISIBLE
-                }
+                binding.cvLoading.isVisible = it
             }
         }
     }
@@ -97,7 +93,7 @@ class AddStoryActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
 
-            val chooser = Intent.createChooser(intent, "Choose a Picture")
+            val chooser = Intent.createChooser(intent, getString(R.string.chooser))
 
             launcherIntentGallery.launch(chooser)
         }

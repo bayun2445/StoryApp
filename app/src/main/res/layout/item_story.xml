@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:src="@drawable/photo_placeholder"
+            android:transitionName="photo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
@@ -28,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="5dp"
+            android:transitionName="name"
             android:text="@string/username"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

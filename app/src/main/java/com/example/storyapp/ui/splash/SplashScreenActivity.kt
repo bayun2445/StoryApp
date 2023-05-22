@@ -13,7 +13,7 @@ import com.example.storyapp.ui.login.LoginActivity
 
 
 @SuppressLint("CustomSplashScreen")
-class SplashScreen : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashScreenBinding
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -28,12 +28,11 @@ class SplashScreen : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             if (!token.isNullOrEmpty()) {
-                Intent(this@SplashScreen, StoryActivity::class.java).also {
-                    it.putExtra("token", token)
+                Intent(this@SplashScreenActivity, StoryActivity::class.java).also {
                     startActivity(it)
                 }
             } else {
-                Intent(this@SplashScreen, LoginActivity::class.java).also {
+                Intent(this@SplashScreenActivity, LoginActivity::class.java).also {
                     startActivity(it)
                 }
             }

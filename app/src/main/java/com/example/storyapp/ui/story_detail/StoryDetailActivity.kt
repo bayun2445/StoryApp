@@ -20,7 +20,6 @@ class StoryDetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.topBarMenu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        @Suppress("DEPRECATION")
         story = intent.getParcelableExtra("story")
 
         story?.let {
@@ -38,9 +37,11 @@ class StoryDetailActivity : AppCompatActivity() {
             .load(story.photoUrl)
             .into(binding.ivDetailPhoto)
 
-        binding.tvDetailDate.text = story.createdAt?.let { convertStringToDate(it) }
-        binding.tvDetailName.text = story.name
-        binding.tvDetailDescription.text = story.description
+        binding.apply {
+            tvDetailDate.text = story.createdAt?.let { convertStringToDate(it) }
+            tvDetailName.text = story.name
+            tvDetailDescription.text = story.description
+        }
     }
 
     private fun convertStringToDate(inputString: String): String {

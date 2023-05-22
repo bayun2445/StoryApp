@@ -35,6 +35,7 @@
         android:textColor="?colorPrimary"
         android:textSize="32sp"
         android:textStyle="bold"
+        android:transitionName="title"
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,40 +60,42 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-   <com.google.android.material.textfield.TextInputLayout
-       android:id="@+id/il_password"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:maxWidth="488dp"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@+id/il_name">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/il_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxWidth="488dp"
+        android:transitionName="password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/il_email">
 
-       <com.example.storyapp.components.MyEditText
-           android:id="@+id/ed_register_password"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:hint="@string/password"
-           android:inputType="textPassword"
-           android:importantForAutofill="no" />
-   </com.google.android.material.textfield.TextInputLayout>
+        <com.example.storyapp.components.MyEditText
+            android:id="@+id/ed_register_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:importantForAutofill="no"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/il_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:transitionName="email"
         android:maxWidth="488dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/il_password">
+        app:layout_constraintTop_toBottomOf="@+id/il_name">
 
         <com.example.storyapp.components.MyEditText
             android:id="@+id/ed_register_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -100,11 +103,11 @@
         android:id="@+id/btn_sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxWidth="320dp"
         android:layout_marginTop="20dp"
+        android:maxWidth="320dp"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/il_email" />
+        app:layout_constraintTop_toBottomOf="@+id/il_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

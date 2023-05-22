@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.databinding.ActivityLoginBinding
 import com.example.storyapp.helper.ViewModelFactory
@@ -55,10 +58,8 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.isLoading.observe(this) {
             it?.let {
-                if (it) {
-                    binding.cvLoading.visibility = View.VISIBLE
-                } else {
-                    binding.cvLoading.visibility = View.INVISIBLE
+                it?.let {
+                    binding.cvLoading.isVisible = it
                 }
             }
         }
@@ -67,9 +68,16 @@ class LoginActivity : AppCompatActivity() {
     private fun setButtonsOnClickListener() {
 
         binding.btnRegister.setOnClickListener {
-            Intent(this@LoginActivity, RegisterActivity::class.java).also {
-                startActivity(it)
-            }
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+
+            val optionsCompat = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(
+                    this,
+                    Pair(binding.edLoginEmail, "email"),
+                    Pair(binding.edLoginPassword, "password")
+                )
+
+            startActivity(intent, optionsCompat.toBundle())
         }
 
         binding.btnSignIn.setOnClickListener {
