@@ -6,63 +6,59 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.storyapp.BuildConfig
 import com.example.storyapp.R
 import com.example.storyapp.api.StoryItem
 import com.example.storyapp.databinding.ActivityStoryBinding
 import com.example.storyapp.helper.ViewModelFactory
-import com.example.storyapp.ui.story_detail.StoryDetailActivity
 import com.example.storyapp.ui.add_story.AddStoryActivity
 import com.example.storyapp.ui.login.LoginActivity
+import timber.log.Timber
 
 class StoryActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityStoryBinding
-    private lateinit var viewModel: StoryViewModel
+    private val binding by lazy {
+        ActivityStoryBinding.inflate(layoutInflater)
+    }
+    private val viewModel: StoryViewModel by viewModels {
+        ViewModelFactory(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.topBarMenu)
-
-        val sharedPreferences = applicationContext.getSharedPreferences(SHARED_PREF_KEY, MODE_PRIVATE)
-
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory.getInstance(sharedPreferences)
-        )[StoryViewModel::class.java]
 
         binding.rvStory.layoutManager = LinearLayoutManager(this)
 
         observeViewModel()
 
-        viewModel.listStory.observe(this) { list: List<StoryItem?>? ->
-            list?.let {
-                if (it.isNotEmpty()) {
-                    loadStoryData(it)
-                }
-            }
-
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
         }
+
     }
 
     override fun onRestart() {
-        viewModel.getAllStories()
+        viewModel.getPagesStories()
 
         super.onRestart()
     }
 
     private fun observeViewModel() {
+        viewModel.getPagesStories().observe(this) {
+            loadStoryData(it)
+        }
+
         viewModel.toastText.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         }
     }
-
-    private fun loadStoryData(list: List<StoryItem?>) {
-        val adapter = StoryListAdapter(list)
+    private fun loadStoryData(pagingData: PagingData<StoryItem>){
+        val adapter = StoryListAdapter()
+        adapter.submitData(lifecycle, pagingData)
 
         binding.rvStory.apply {
             this.adapter = adapter
@@ -99,9 +95,5 @@ class StoryActivity : AppCompatActivity() {
             else ->
                 true
         }
-    }
-
-    companion object {
-        private const val SHARED_PREF_KEY = "story_app_prefs"
     }
 }

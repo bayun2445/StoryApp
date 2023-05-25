@@ -29,12 +29,12 @@ interface ApiService {
     ): Call<LoginResponse>
 
     @GET("v1/stories")
-    fun getAllStories(
+    suspend fun getPagesStories(
         @Header("Authorization") authToken: String,
         @Query("page") page: Int? = null,
         @Query("size") size: Int? = null,
-        @Query("location") location: Int? = null
-    ): Call<StoryListResponse>
+        @Query("location") location: Int = 1
+    ): StoryListResponse
 
     @Multipart
     @POST("v1/stories")

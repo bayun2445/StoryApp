@@ -1,16 +1,16 @@
 package com.example.storyapp.ui.login
 
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.storyapp.api.ApiConfig
 import com.example.storyapp.api.LoginResponse
+import com.example.storyapp.data.StoryRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginViewModel(val sharedPref: SharedPreferences): ViewModel() {
+class LoginViewModel(private val storyRepository: StoryRepository): ViewModel() {
     private val _toastText = MutableLiveData<String>()
     private val _isSucceed = MutableLiveData<Boolean>()
     private val _isLoading = MutableLiveData<Boolean>()
@@ -51,12 +51,8 @@ class LoginViewModel(val sharedPref: SharedPreferences): ViewModel() {
     }
 
     private fun storeAuthorizationToken(token: String?) {
-        sharedPref.edit()
-            .putString(TOKEN_KEY, token)
-            .apply()
-    }
-
-    companion object {
-        private const val TOKEN_KEY = "login_token"
+        token?.let {
+            storyRepository.storeAuthorizationToken(it)
+        }
     }
 }

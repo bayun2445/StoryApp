@@ -3,13 +3,11 @@ package com.example.storyapp.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.databinding.ActivityLoginBinding
 import com.example.storyapp.helper.ViewModelFactory
 import com.example.storyapp.ui.register.RegisterActivity
@@ -17,19 +15,16 @@ import com.example.storyapp.ui.story.StoryActivity
 
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
-    private lateinit var viewModel: LoginViewModel
+    private val binding by lazy {
+        ActivityLoginBinding.inflate(layoutInflater)
+    }
+    private val viewModel: LoginViewModel by viewModels {
+        ViewModelFactory(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val sharedPreferences = applicationContext.getSharedPreferences(SHARED_PREF_KEY, MODE_PRIVATE)
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory.getInstance(sharedPreferences)
-        )[LoginViewModel::class.java]
 
         setButtonsOnClickListener()
 
@@ -43,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
                 it,
                 Toast.LENGTH_SHORT
             ).show()
-            Log.d(TAG, it)
         }
 
         viewModel.isSucceed.observe(this) {
@@ -58,9 +52,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.isLoading.observe(this) {
             it?.let {
-                it?.let {
-                    binding.cvLoading.isVisible = it
-                }
+                binding.cvLoading.isVisible = it
             }
         }
     }
@@ -86,10 +78,5 @@ class LoginActivity : AppCompatActivity() {
 
             viewModel.signIn(email, password)
         }
-    }
-
-    companion object {
-        private val TAG = LoginActivity::class.java.simpleName
-        private const val SHARED_PREF_KEY = "story_app_prefs"
     }
 }

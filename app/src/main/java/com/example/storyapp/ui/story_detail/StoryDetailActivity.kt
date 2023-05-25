@@ -10,12 +10,13 @@ import java.util.Date
 import java.util.Locale
 
 class StoryDetailActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityStoryDetailBinding
+    private val binding by lazy {
+        ActivityStoryDetailBinding.inflate(layoutInflater)
+    }
     private var story: StoryItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityStoryDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.topBarMenu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

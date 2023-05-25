@@ -8,24 +8,28 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.R
 import com.example.storyapp.databinding.ActivityAddStoryBinding
 import com.example.storyapp.helper.ViewModelFactory
 import java.io.File
 
 class AddStoryActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityAddStoryBinding
-    private lateinit var viewModel: AddStoryViewModel
+    private val binding by lazy {
+        ActivityAddStoryBinding.inflate(layoutInflater)
+    }
+    private val viewModel: AddStoryViewModel by viewModels {
+        ViewModelFactory(this)
+    }
 
     private var imageFile: File? = null
 
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == RESULT_OK) {
-            val imageBitmap = it.data?.extras?.get("data") as Bitmap
+    ) {result ->
+        if (result.resultCode == RESULT_OK) {
+            val imageBitmap = result.data?.extras?.get("data") as Bitmap
             imageFile = bitmapToFile(imageBitmap, this)
             binding.ivPhotoPreview.setImageBitmap(imageBitmap)
         }
@@ -44,16 +48,10 @@ class AddStoryActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.topBarMenu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val sharedPref = applicationContext.getSharedPreferences(SHARED_PREF_KEY, MODE_PRIVATE)
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory.getInstance(sharedPref)
-        )[AddStoryViewModel::class.java]
 
         setButtonsClickListener()
         observeViewModel()
@@ -112,9 +110,5 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        private const val SHARED_PREF_KEY = "story_app_prefs"
     }
 }

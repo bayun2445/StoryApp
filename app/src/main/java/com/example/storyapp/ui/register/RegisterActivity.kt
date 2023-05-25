@@ -2,22 +2,23 @@ package com.example.storyapp.ui.register
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.example.storyapp.databinding.ActivityRegisterBinding
+import com.example.storyapp.helper.ViewModelFactory
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityRegisterBinding
-    private lateinit var viewModel: RegisterViewModel
+    private val binding by lazy {
+        ActivityRegisterBinding.inflate(layoutInflater)
+    }
+    private val viewModel: RegisterViewModel by viewModels {
+        ViewModelFactory(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
 
         seButtonsOnClickListener()
         observeViewModel()

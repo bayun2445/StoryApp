@@ -6,27 +6,25 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.storyapp.api.StoryItem
 import com.example.storyapp.databinding.ItemStoryBinding
 import com.example.storyapp.ui.story_detail.StoryDetailActivity
 
-class StoryListAdapter(private val listStory: List<StoryItem?>):
-    RecyclerView.Adapter<StoryListAdapter.StoryViewHolder>() {
+class StoryListAdapter:
+    PagingDataAdapter<StoryItem, StoryListAdapter.StoryViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
         return StoryViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return listStory.size
-    }
-
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
-        listStory[position]?.let {
-            holder.bind(it)
+        val story = getItem(position)
+        story?.let {
+            holder.bind(story)
         }
     }
 
@@ -42,7 +40,7 @@ class StoryListAdapter(private val listStory: List<StoryItem?>):
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, StoryDetailActivity::class.java)
-                intent.putExtra("story", story)
+                intent.putExtra(STORY_EXTRA, story)
 
                 val optionsCompat: ActivityOptionsCompat =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -53,6 +51,20 @@ class StoryListAdapter(private val listStory: List<StoryItem?>):
 
                 itemView.context.startActivity(intent, optionsCompat.toBundle())
             }
+        }
+    }
+
+    companion object {
+        private const val STORY_EXTRA = "story"
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryItem>() {
+            override fun areItemsTheSame(oldItem: StoryItem, newItem: StoryItem): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: StoryItem, newItem: StoryItem): Boolean {
+                return oldItem.id == newItem.id
+            }
+
         }
     }
 }
