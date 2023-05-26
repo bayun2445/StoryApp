@@ -20,4 +20,11 @@
     <string name="upload">Upload</string>
     <string name="date">2022–11–25</string>
     <string name="chooser">Choose a picture</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="maps">Show Location</string>
+    <string name="normal">Normal</string>
+    <string name="satellite">Satellite</string>
+    <string name="terrain">Terrain</string>
+    <string name="hybrid">Hybrid</string>
+    <string name="add_location">Add Story Location</string>
 </resources>

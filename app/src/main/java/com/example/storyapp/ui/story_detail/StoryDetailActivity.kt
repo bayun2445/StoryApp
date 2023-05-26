@@ -1,11 +1,16 @@
 package com.example.storyapp.ui.story_detail
 
+import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.bumptech.glide.Glide
+import com.example.storyapp.R
 import com.example.storyapp.api.StoryItem
 import com.example.storyapp.databinding.ActivityStoryDetailBinding
+import com.example.storyapp.maps.MapsActivity
 import java.util.Date
 import java.util.Locale
 
@@ -21,10 +26,32 @@ class StoryDetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.topBarMenu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        story = intent.getParcelableExtra("story")
+        story = intent.getParcelableExtra(STORY_EXTRA)
 
         story?.let {
             loadStoryDetail(it)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.menu_maps -> {
+                Intent(this@StoryDetailActivity, MapsActivity::class.java).also {
+                    it.putExtra(STORY_EXTRA, story)
+                    startActivity(it)
+                }
+
+                true
+            }
+
+            else -> {
+                true
+            }
         }
     }
 
@@ -51,5 +78,9 @@ class StoryDetailActivity : AppCompatActivity() {
 
         val date: Date = inputFormat.parse(inputString)
         return outputFormat.format(date)
+    }
+
+    companion object {
+        private const val STORY_EXTRA = "story"
     }
 }

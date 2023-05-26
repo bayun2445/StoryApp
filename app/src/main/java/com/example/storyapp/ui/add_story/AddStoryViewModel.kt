@@ -25,11 +25,13 @@ class AddStoryViewModel(private val storyRepository: StoryRepository): ViewModel
     val isSucceed: LiveData<Boolean> = _isSucceed
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun uploadStory(imageFile: File, description: String) {
+    fun uploadStory(imageFile: File, description: String, lat: Float?, lon: Float?) {
         _isLoading.value = true
         val savedToken = storyRepository.getToken()
         val bearerToken = "Bearer $savedToken"
 
+        val requestLatitude = lat?.toString()?.toRequestBody("text/plain".toMediaType())
+        val requestLongitude = lon?.toString()?.toRequestBody("text/plain".toMediaType())
         val requestDescription = description.toRequestBody("text/plain".toMediaType())
         val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
         val imageMultipart = MultipartBody.Part.createFormData(
@@ -38,7 +40,14 @@ class AddStoryViewModel(private val storyRepository: StoryRepository): ViewModel
             requestImageFile
         )
 
-        val client = ApiConfig.getApiService().addNewStory(bearerToken, imageMultipart, requestDescription)
+        val client = ApiConfig.getApiService().addNewStory(
+            bearerToken,
+            imageMultipart,
+            requestDescription,
+            requestLatitude,
+            requestLongitude
+        )
+
         client.enqueue(object : Callback<SuccessResponse> {
             override fun onResponse(
                 call: Call<SuccessResponse>,

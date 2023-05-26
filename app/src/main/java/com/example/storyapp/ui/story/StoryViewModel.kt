@@ -21,9 +21,7 @@ class StoryViewModel(private val storyRepository: StoryRepository): ViewModel() 
     }
 
     fun getPagesStories(): LiveData<PagingData<StoryItem>> {
-        val pagingData = storyRepository.getPagesStory().cachedIn(viewModelScope)
-        _toastText.value = pagingData.toString()
-        return  pagingData
+        return storyRepository.getPagesStory().cachedIn(viewModelScope)
     }
     fun logout() {
         storyRepository.logout()
