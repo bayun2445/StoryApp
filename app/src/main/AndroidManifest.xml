@@ -25,7 +25,7 @@
             android:resource="@raw/map_style" />
 
         <activity
-            android:name=".maps.MapsActivity"
+            android:name=".ui.maps.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity

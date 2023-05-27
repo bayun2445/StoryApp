@@ -2,24 +2,29 @@ package com.example.storyapp.data
 
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.example.storyapp.api.ApiService
 import com.example.storyapp.api.StoryItem
+import com.example.storyapp.database.StoryDatabase
 
 class StoryRepository(
     private val sharedPref: SharedPreferences,
+    private val storyDatabase: StoryDatabase,
     private val apiService: ApiService
     ) {
+    @OptIn(ExperimentalPagingApi::class)
     fun getPagesStory(): LiveData<PagingData<StoryItem>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 2
+                pageSize = 5
             ),
+            remoteMediator = StoryRemoteMediator(getToken(), storyDatabase, apiService),
             pagingSourceFactory = {
-                StoryPagingSource(apiService, getToken())
+                storyDatabase.storyDao().getPageStory()
             }
         ).liveData
     }
