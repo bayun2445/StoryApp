@@ -5,12 +5,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.storyapp.R
@@ -68,6 +68,7 @@ class AddStoryActivity : AppCompatActivity() {
                 }
                 else -> {
                     showToast("Access to Location Failed")
+                    binding.checkBoxLocation.isChecked = false
                 }
             }
         }
@@ -175,9 +176,5 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        private const val LOCATION_REQUEST_CODE = 100
     }
 }

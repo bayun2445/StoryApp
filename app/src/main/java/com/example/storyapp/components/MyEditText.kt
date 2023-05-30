@@ -1,9 +1,7 @@
 package com.example.storyapp.components
 
 import android.content.Context
-import android.text.Editable
 import android.text.InputType
-import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText

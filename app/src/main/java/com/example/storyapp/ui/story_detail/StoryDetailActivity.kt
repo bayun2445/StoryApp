@@ -1,16 +1,11 @@
 package com.example.storyapp.ui.story_detail
 
-import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.storyapp.R
 import com.example.storyapp.api.StoryItem
 import com.example.storyapp.databinding.ActivityStoryDetailBinding
-import com.example.storyapp.ui.maps.MapsActivity
 import java.util.Date
 import java.util.Locale
 
@@ -33,31 +28,9 @@ class StoryDetailActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.detail_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.menu_maps -> {
-                Intent(this@StoryDetailActivity, MapsActivity::class.java).also {
-                    it.putExtra(STORY_EXTRA, story)
-                    startActivity(it)
-                }
-
-                true
-            }
-
-            android.R.id.home -> {
-                finish()
-                true
-            }
-
-            else -> {
-                true
-            }
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 
     private fun loadStoryDetail(story: StoryItem) {

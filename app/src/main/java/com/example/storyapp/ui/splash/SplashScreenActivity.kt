@@ -8,8 +8,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.storyapp.databinding.ActivitySplashScreenBinding
-import com.example.storyapp.ui.story.StoryActivity
 import com.example.storyapp.ui.login.LoginActivity
+import com.example.storyapp.ui.story.StoryActivity
 
 
 @SuppressLint("CustomSplashScreen")

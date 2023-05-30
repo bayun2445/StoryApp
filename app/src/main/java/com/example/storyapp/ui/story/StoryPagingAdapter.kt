@@ -14,8 +14,8 @@ import com.example.storyapp.api.StoryItem
 import com.example.storyapp.databinding.ItemStoryBinding
 import com.example.storyapp.ui.story_detail.StoryDetailActivity
 
-class StoryListAdapter:
-    PagingDataAdapter<StoryItem, StoryListAdapter.StoryViewHolder>(DIFF_CALLBACK) {
+class StoryPagingAdapter:
+    PagingDataAdapter<StoryItem, StoryPagingAdapter.StoryViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StoryViewHolder(binding)

@@ -33,8 +33,16 @@ interface ApiService {
         @Header("Authorization") authToken: String,
         @Query("page") page: Int? = null,
         @Query("size") size: Int? = null,
-        @Query("location") location: Int = 1
+        @Query("location") location: Int = 0
     ): StoryListResponse
+
+    @GET("v1/stories")
+    fun getStoriesWithLocation(
+        @Header("Authorization") authToken: String,
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("location") location: Int = 1
+    ): Call<StoryListResponse>
 
     @Multipart
     @POST("v1/stories")
