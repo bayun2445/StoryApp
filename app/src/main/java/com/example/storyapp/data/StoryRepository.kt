@@ -24,7 +24,7 @@ class StoryRepository(
     ) {
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getPagesStory(): LiveData<PagingData<StoryItem>> {
+    fun getPagesStories(): LiveData<PagingData<StoryItem>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 10

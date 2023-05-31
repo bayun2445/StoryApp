@@ -56,7 +56,7 @@ class StoryPagingAdapter:
 
     companion object {
         private const val STORY_EXTRA = "story"
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryItem>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryItem>() {
             override fun areItemsTheSame(oldItem: StoryItem, newItem: StoryItem): Boolean {
                 return oldItem == newItem
             }

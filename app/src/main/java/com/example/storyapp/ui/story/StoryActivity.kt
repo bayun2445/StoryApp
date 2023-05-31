@@ -40,6 +40,7 @@ class StoryActivity : AppCompatActivity() {
             it.stackFromEnd = false
         }
 
+        viewModel.getPagesStories()
         observeViewModel()
 
         if (BuildConfig.DEBUG) {
