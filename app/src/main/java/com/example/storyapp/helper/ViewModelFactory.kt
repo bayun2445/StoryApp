@@ -10,7 +10,7 @@ import com.example.storyapp.ui.maps.MapsViewModel
 import com.example.storyapp.ui.register.RegisterViewModel
 import com.example.storyapp.ui.story.StoryViewModel
 
-class ViewModelFactory(private val mContext: Context): ViewModelProvider.Factory {
+class ViewModelFactory(private val mContext: Context) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {

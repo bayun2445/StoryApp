@@ -21,7 +21,7 @@ class StoryRepository(
     private val sharedPref: SharedPreferences,
     private val storyDatabase: StoryDatabase,
     private val apiService: ApiService
-    ) {
+) {
 
     @OptIn(ExperimentalPagingApi::class)
     fun getPagesStories(): LiveData<PagingData<StoryItem>> {
@@ -48,7 +48,12 @@ class StoryRepository(
         return apiService.register(name, email, password)
     }
 
-    fun addNewStory(multipart: MultipartBody.Part, descriptionBody: RequestBody, latBody: RequestBody?, lonBody: RequestBody?): Call<SuccessResponse> {
+    fun addNewStory(
+        multipart: MultipartBody.Part,
+        descriptionBody: RequestBody,
+        latBody: RequestBody?,
+        lonBody: RequestBody?
+    ): Call<SuccessResponse> {
         return apiService.addNewStory(getToken(), multipart, descriptionBody, latBody, lonBody)
     }
 
@@ -69,7 +74,7 @@ class StoryRepository(
     }
 
 
-    companion object{
+    companion object {
         private const val TOKEN_KEY = "login_token"
     }
 }

@@ -103,18 +103,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
                 true
             }
+
             R.id.satellite_type -> {
                 mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
                 true
             }
+
             R.id.terrain_type -> {
                 mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
                 true
             }
+
             R.id.hybrid_type -> {
                 mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
                 true
             }
+
             else -> {
                 super.onOptionsItemSelected(item)
             }

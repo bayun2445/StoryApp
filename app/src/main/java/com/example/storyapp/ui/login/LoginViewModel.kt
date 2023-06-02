@@ -9,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginViewModel(private val storyRepository: StoryRepository): ViewModel() {
+class LoginViewModel(private val storyRepository: StoryRepository) : ViewModel() {
     private val _toastText = MutableLiveData<String>()
     private val _isSucceed = MutableLiveData<Boolean>()
     private val _isLoading = MutableLiveData<Boolean>()

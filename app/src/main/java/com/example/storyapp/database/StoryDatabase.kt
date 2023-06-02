@@ -27,7 +27,7 @@ abstract class StoryDatabase : RoomDatabase() {
                     context.applicationContext,
                     StoryDatabase::class.java,
                     "story_database"
-                )   .fallbackToDestructiveMigration()
+                ).fallbackToDestructiveMigration()
                     .build()
                     .also { instance = it }
             }

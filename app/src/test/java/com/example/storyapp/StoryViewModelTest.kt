@@ -57,12 +57,12 @@ class StoryViewModelTest {
 
         Assert.assertNotNull(actualStory)
 
-        val expectedResulList = expectedData.toList()
+        val expectedResultList = expectedData.toList()
         val actualResultList = actualStory.toList()
 
-        Assert.assertEquals(expectedResulList, actualResultList)
-        Assert.assertEquals(expectedResulList.size, actualResultList.size)
-        Assert.assertEquals(expectedResulList.first(), actualResultList.first())
+        Assert.assertEquals(expectedResultList, actualResultList)
+        Assert.assertEquals(expectedResultList.size, actualResultList.size)
+        Assert.assertEquals(expectedResultList.first(), actualResultList.first())
     }
 
     @Test

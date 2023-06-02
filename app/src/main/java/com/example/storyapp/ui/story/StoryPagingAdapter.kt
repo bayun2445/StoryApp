@@ -14,7 +14,7 @@ import com.example.storyapp.api.StoryItem
 import com.example.storyapp.databinding.ItemStoryBinding
 import com.example.storyapp.ui.story_detail.StoryDetailActivity
 
-class StoryPagingAdapter:
+class StoryPagingAdapter :
     PagingDataAdapter<StoryItem, StoryPagingAdapter.StoryViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,7 +28,8 @@ class StoryPagingAdapter:
         }
     }
 
-    inner class StoryViewHolder(private val itemBinding: ItemStoryBinding): RecyclerView.ViewHolder(itemBinding.root) {
+    inner class StoryViewHolder(private val itemBinding: ItemStoryBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(story: StoryItem) {
             Glide.with(itemView.context)

@@ -9,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterViewModel(private val storyRepository: StoryRepository): ViewModel() {
+class RegisterViewModel(private val storyRepository: StoryRepository) : ViewModel() {
 
     private val _toastText = MutableLiveData<String>()
     private val _isSucceed = MutableLiveData<Boolean>()
@@ -23,7 +23,10 @@ class RegisterViewModel(private val storyRepository: StoryRepository): ViewModel
         _isLoading.value = true
         storyRepository.register(name, email, password)
             .enqueue(object : Callback<SuccessResponse> {
-                override fun onResponse(call: Call<SuccessResponse>, response: Response<SuccessResponse>) {
+                override fun onResponse(
+                    call: Call<SuccessResponse>,
+                    response: Response<SuccessResponse>
+                ) {
                     if (response.body()?.error == false) {
                         _toastText.value = "Register success"
                         _isSucceed.value = true
@@ -35,7 +38,7 @@ class RegisterViewModel(private val storyRepository: StoryRepository): ViewModel
                 }
 
                 override fun onFailure(call: Call<SuccessResponse>, t: Throwable) {
-                    _toastText.value =   "Register failed: ${t.message.toString()}"
+                    _toastText.value = "Register failed: ${t.message.toString()}"
                     _isLoading.value = false
                 }
             })

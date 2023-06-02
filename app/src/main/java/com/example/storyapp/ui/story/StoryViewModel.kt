@@ -9,7 +9,7 @@ import androidx.paging.cachedIn
 import com.example.storyapp.api.StoryItem
 import com.example.storyapp.data.StoryRepository
 
-class StoryViewModel(private val storyRepository: StoryRepository): ViewModel() {
+class StoryViewModel(private val storyRepository: StoryRepository) : ViewModel() {
     private val _toastText = MutableLiveData<String?>()
 
     val toastText: LiveData<String?> = _toastText
@@ -17,6 +17,7 @@ class StoryViewModel(private val storyRepository: StoryRepository): ViewModel() 
     fun getPagesStories(): LiveData<PagingData<StoryItem>> {
         return storyRepository.getPagesStories().cachedIn(viewModelScope)
     }
+
     fun logout() {
         storyRepository.logout()
     }

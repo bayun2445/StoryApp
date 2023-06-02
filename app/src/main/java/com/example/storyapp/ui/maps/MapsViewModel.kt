@@ -11,7 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 
-class MapsViewModel(private val storyRepository: StoryRepository): ViewModel() {
+class MapsViewModel(private val storyRepository: StoryRepository) : ViewModel() {
     private val _listLocationStory = MutableLiveData<List<StoryItem>>()
 
     val listLocationStory: LiveData<List<StoryItem>> = _listLocationStory

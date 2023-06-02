@@ -46,7 +46,7 @@ class SplashScreenActivity : AppCompatActivity() {
         return sharedPreferences.getString(TOKEN_KEY, null)
     }
 
-    companion object{
+    companion object {
         private const val SHARED_PREF_KEY = "story_app_prefs"
         private const val TOKEN_KEY = "login_token"
     }

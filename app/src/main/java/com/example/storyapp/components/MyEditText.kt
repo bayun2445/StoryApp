@@ -6,12 +6,12 @@ import android.util.AttributeSet
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
 
-class MyEditText: TextInputEditText {
-    constructor(context: Context): super(context) {
+class MyEditText : TextInputEditText {
+    constructor(context: Context) : super(context) {
         init()
     }
 
-    constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
     }
 
@@ -19,7 +19,7 @@ class MyEditText: TextInputEditText {
         context: Context,
         attrs: AttributeSet,
         defStyleAttr: Int
-    ): super(context, attrs, defStyleAttr) {
+    ) : super(context, attrs, defStyleAttr) {
         init()
     }
 

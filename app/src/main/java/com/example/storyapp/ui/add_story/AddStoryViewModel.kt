@@ -15,7 +15,7 @@ import retrofit2.Response
 import java.io.File
 
 
-class AddStoryViewModel(private val storyRepository: StoryRepository): ViewModel() {
+class AddStoryViewModel(private val storyRepository: StoryRepository) : ViewModel() {
     private val _toastText = MutableLiveData<String>()
     private val _isSucceed = MutableLiveData<Boolean>()
     private val _isLoading = MutableLiveData<Boolean>()

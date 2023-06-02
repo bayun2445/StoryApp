@@ -12,11 +12,11 @@ import com.example.storyapp.database.StoryDatabase
 import timber.log.Timber
 
 @OptIn(ExperimentalPagingApi::class)
-class StoryRemoteMediator (
+class StoryRemoteMediator(
     private val authToken: String,
     private val storyDatabase: StoryDatabase,
     private val apiService: ApiService,
-): RemoteMediator<Int, StoryItem>() {
+) : RemoteMediator<Int, StoryItem>() {
 
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -27,11 +27,12 @@ class StoryRemoteMediator (
         state: PagingState<Int, StoryItem>
     ): MediatorResult {
         val page = when (loadType) {
-            LoadType.REFRESH ->{
+            LoadType.REFRESH -> {
                 Timber.d("Load Refresh: ")
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
                 remoteKeys?.nextKey?.minus(1) ?: INITIAL_PAGE_INDEX
             }
+
             LoadType.PREPEND -> {
                 Timber.d("Load Prepend: ")
                 val remoteKeys = getRemoteKeyForFirstItem(state)
@@ -39,6 +40,7 @@ class StoryRemoteMediator (
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 prevKey
             }
+
             LoadType.APPEND -> {
                 Timber.d("Load Append: ")
                 val remoteKeys = getRemoteKeyForLastItem(state)

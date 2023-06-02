@@ -63,15 +63,18 @@ class AddStoryActivity : AppCompatActivity() {
                 permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
                     getMyLastLocation()
                 }
+
                 permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
                     getMyLastLocation()
                 }
+
                 else -> {
                     showToast("Access to Location Failed")
                     binding.checkBoxLocation.isChecked = false
                 }
             }
         }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -100,6 +103,7 @@ class AddStoryActivity : AppCompatActivity() {
             permission
         ) == PackageManager.PERMISSION_GRANTED
     }
+
     private fun getMyLastLocation() {
         if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
             checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)

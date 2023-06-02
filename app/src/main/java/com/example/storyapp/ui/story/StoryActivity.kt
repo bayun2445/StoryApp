@@ -35,10 +35,11 @@ class StoryActivity : AppCompatActivity() {
         setSupportActionBar(binding.topBarMenu)
 
         adapter = StoryPagingAdapter()
-        binding.rvStory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false).also {
-            it.isSmoothScrollbarEnabled = true
-            it.stackFromEnd = false
-        }
+        binding.rvStory.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false).also {
+                it.isSmoothScrollbarEnabled = true
+                it.stackFromEnd = false
+            }
 
         viewModel.getPagesStories()
         observeViewModel()
@@ -65,7 +66,8 @@ class StoryActivity : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         }
     }
-    private fun loadStoryData(pagingData: PagingData<StoryItem>){
+
+    private fun loadStoryData(pagingData: PagingData<StoryItem>) {
         adapter.submitData(lifecycle, pagingData)
 
         binding.rvStory.adapter = adapter
@@ -78,7 +80,7 @@ class StoryActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.menu_logout -> {
                 viewModel.logout()
 

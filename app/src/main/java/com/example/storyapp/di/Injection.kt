@@ -8,7 +8,8 @@ import com.example.storyapp.database.StoryDatabase
 object Injection {
 
     fun provideRepository(context: Context): StoryRepository {
-        val sharedPreferences = context.getSharedPreferences("story_app_prefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            context.getSharedPreferences("story_app_prefs", Context.MODE_PRIVATE)
         val apiService = ApiConfig.getApiService()
         val storyDatabase = StoryDatabase.getInstance(context)
 
