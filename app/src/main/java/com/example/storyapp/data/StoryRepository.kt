@@ -76,5 +76,19 @@ class StoryRepository(
 
     companion object {
         private const val TOKEN_KEY = "login_token"
+
+        @Volatile
+        private var instance: StoryRepository? = null
+
+        @JvmStatic
+        fun getInstance(
+            sharedPref: SharedPreferences,
+            storyDatabase: StoryDatabase,
+            apiService: ApiService
+        ): StoryRepository {
+            return instance ?: synchronized(this) {
+                StoryRepository(sharedPref, storyDatabase, apiService)
+            }
+        }
     }
 }

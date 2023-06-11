@@ -13,6 +13,6 @@ object Injection {
         val apiService = ApiConfig.getApiService()
         val storyDatabase = StoryDatabase.getInstance(context)
 
-        return StoryRepository(sharedPreferences, storyDatabase, apiService)
+        return StoryRepository.getInstance(sharedPreferences, storyDatabase, apiService)
     }
 }
