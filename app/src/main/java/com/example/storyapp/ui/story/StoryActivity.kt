@@ -16,6 +16,7 @@ import com.example.storyapp.databinding.ActivityStoryBinding
 import com.example.storyapp.helper.ViewModelFactory
 import com.example.storyapp.ui.add_story.AddStoryActivity
 import com.example.storyapp.ui.login.LoginActivity
+import com.example.storyapp.ui.maps.MapsActivity
 import timber.log.Timber
 
 class StoryActivity : AppCompatActivity() {
@@ -26,19 +27,34 @@ class StoryActivity : AppCompatActivity() {
         ViewModelFactory(this)
     }
 
+    private lateinit var adapter: StoryPagingAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.topBarMenu)
 
-        binding.rvStory.layoutManager = LinearLayoutManager(this)
+        adapter = StoryPagingAdapter()
+        binding.rvStory.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false).also {
+                it.isSmoothScrollbarEnabled = true
+                it.stackFromEnd = false
+            }
 
+        viewModel.getPagesStories()
         observeViewModel()
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.d("onResume: ")
+        viewModel.getPagesStories()
+        adapter.refresh()
     }
 
     private fun observeViewModel() {
@@ -50,14 +66,12 @@ class StoryActivity : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         }
     }
-    private fun loadStoryData(pagingData: PagingData<StoryItem>){
-        val adapter = StoryListAdapter()
+
+    private fun loadStoryData(pagingData: PagingData<StoryItem>) {
         adapter.submitData(lifecycle, pagingData)
 
-        binding.rvStory.apply {
-            this.adapter = adapter
-            setHasFixedSize(true)
-        }
+        binding.rvStory.adapter = adapter
+        binding.rvStory.setHasFixedSize(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,7 +80,7 @@ class StoryActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.menu_logout -> {
                 viewModel.logout()
 
@@ -80,6 +94,14 @@ class StoryActivity : AppCompatActivity() {
 
             R.id.menu_add -> {
                 Intent(this, AddStoryActivity::class.java).also {
+                    startActivity(it)
+                }
+
+                true
+            }
+
+            R.id.menu_maps -> {
+                Intent(this, MapsActivity::class.java).also {
                     startActivity(it)
                 }
 

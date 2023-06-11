@@ -9,13 +9,14 @@ import com.example.storyapp.api.ApiService
 import com.example.storyapp.api.StoryItem
 import com.example.storyapp.database.RemoteKeys
 import com.example.storyapp.database.StoryDatabase
+import timber.log.Timber
 
 @OptIn(ExperimentalPagingApi::class)
-class StoryRemoteMediator (
+class StoryRemoteMediator(
     private val authToken: String,
     private val storyDatabase: StoryDatabase,
     private val apiService: ApiService,
-): RemoteMediator<Int, StoryItem>() {
+) : RemoteMediator<Int, StoryItem>() {
 
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -26,17 +27,22 @@ class StoryRemoteMediator (
         state: PagingState<Int, StoryItem>
     ): MediatorResult {
         val page = when (loadType) {
-            LoadType.REFRESH ->{
+            LoadType.REFRESH -> {
+                Timber.d("Load Refresh: ")
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
                 remoteKeys?.nextKey?.minus(1) ?: INITIAL_PAGE_INDEX
             }
+
             LoadType.PREPEND -> {
+                Timber.d("Load Prepend: ")
                 val remoteKeys = getRemoteKeyForFirstItem(state)
                 val prevKey = remoteKeys?.prevKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 prevKey
             }
+
             LoadType.APPEND -> {
+                Timber.d("Load Append: ")
                 val remoteKeys = getRemoteKeyForLastItem(state)
                 val nextKey = remoteKeys?.nextKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
@@ -44,13 +50,12 @@ class StoryRemoteMediator (
             }
         }
         return try {
-            val bearerToken = "Bearer $authToken"
-            val responseData = apiService.getPagesStories(bearerToken, page, state.config.pageSize)
+            val responseData = apiService.getPagesStories(authToken, page, state.config.pageSize)
             val endOfPaginationReached = responseData.listStory.isEmpty()
             storyDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    storyDatabase.storyDao().deleteAll()
                     storyDatabase.remoteKeysDao().deleteRemoteKeys()
+                    storyDatabase.storyDao().deleteAll()
                 }
                 val prevKey = if (page == 1) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1

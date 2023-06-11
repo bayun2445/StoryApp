@@ -8,8 +8,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.storyapp.databinding.ActivitySplashScreenBinding
-import com.example.storyapp.ui.story.StoryActivity
 import com.example.storyapp.ui.login.LoginActivity
+import com.example.storyapp.ui.story.StoryActivity
 
 
 @SuppressLint("CustomSplashScreen")
@@ -46,7 +46,7 @@ class SplashScreenActivity : AppCompatActivity() {
         return sharedPreferences.getString(TOKEN_KEY, null)
     }
 
-    companion object{
+    companion object {
         private const val SHARED_PREF_KEY = "story_app_prefs"
         private const val TOKEN_KEY = "login_token"
     }

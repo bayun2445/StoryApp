@@ -1,14 +1,15 @@
 package com.example.storyapp.ui.maps
 
 import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.storyapp.R
 import com.example.storyapp.api.StoryItem
 import com.example.storyapp.databinding.ActivityMapsBinding
+import com.example.storyapp.helper.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -23,6 +24,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private val binding by lazy {
         ActivityMapsBinding.inflate(layoutInflater)
+    }
+    private val viewModel: MapsViewModel by viewModels {
+        ViewModelFactory(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,24 +43,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        setMapStyle()
-
-        val story = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(STORY_EXTRA, StoryItem::class.java)
-        } else {
-            intent.getParcelableExtra(STORY_EXTRA)
+        mMap.uiSettings.apply {
+            isCompassEnabled = true
+            isZoomControlsEnabled = true
+            isMapToolbarEnabled = true
         }
 
-        val location =
-            if (story?.lat != null && story.lon != null) {
-                LatLng(story.lat, story.lon)
-            } else {
-                null
-            }
+        setMapStyle()
+        observeViewModel()
+    }
 
-        location?.let {
-            mMap.addMarker(MarkerOptions().position(location).title("Story Location"))
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+    private fun observeViewModel() {
+        viewModel.listLocationStory.observe(this) {
+            showStoryMarker(it)
+        }
+    }
+
+    private fun showStoryMarker(storyItems: List<StoryItem>) {
+        storyItems.forEach { story ->
+            if (story.lat != null && story.lon != null) {
+                val location = LatLng(story.lat, story.lon)
+                mMap.addMarker(
+                    MarkerOptions()
+                        .title(story.name)
+                        .position(location)
+                        .snippet("${story.name}: ${story.description}")
+                )
+
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 7f))
+            }
         }
     }
 
@@ -88,25 +103,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
                 true
             }
+
             R.id.satellite_type -> {
                 mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
                 true
             }
+
             R.id.terrain_type -> {
                 mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
                 true
             }
+
             R.id.hybrid_type -> {
                 mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
                 true
             }
+
             else -> {
                 super.onOptionsItemSelected(item)
             }
         }
-    }
-
-    companion object {
-        private const val STORY_EXTRA = "story"
     }
 }

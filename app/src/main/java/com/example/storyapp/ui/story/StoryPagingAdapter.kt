@@ -14,8 +14,8 @@ import com.example.storyapp.api.StoryItem
 import com.example.storyapp.databinding.ItemStoryBinding
 import com.example.storyapp.ui.story_detail.StoryDetailActivity
 
-class StoryListAdapter:
-    PagingDataAdapter<StoryItem, StoryListAdapter.StoryViewHolder>(DIFF_CALLBACK) {
+class StoryPagingAdapter :
+    PagingDataAdapter<StoryItem, StoryPagingAdapter.StoryViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StoryViewHolder(binding)
@@ -28,7 +28,8 @@ class StoryListAdapter:
         }
     }
 
-    inner class StoryViewHolder(private val itemBinding: ItemStoryBinding): RecyclerView.ViewHolder(itemBinding.root) {
+    inner class StoryViewHolder(private val itemBinding: ItemStoryBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(story: StoryItem) {
             Glide.with(itemView.context)
@@ -56,7 +57,7 @@ class StoryListAdapter:
 
     companion object {
         private const val STORY_EXTRA = "story"
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryItem>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryItem>() {
             override fun areItemsTheSame(oldItem: StoryItem, newItem: StoryItem): Boolean {
                 return oldItem == newItem
             }

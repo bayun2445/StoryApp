@@ -1,9 +1,9 @@
 package com.example.storyapp.ui.register
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.storyapp.databinding.ActivityRegisterBinding
 import com.example.storyapp.helper.ViewModelFactory

@@ -9,20 +9,15 @@ import androidx.paging.cachedIn
 import com.example.storyapp.api.StoryItem
 import com.example.storyapp.data.StoryRepository
 
-class StoryViewModel(private val storyRepository: StoryRepository): ViewModel() {
-    private val _listStory = MutableLiveData<List<StoryItem?>?>()
+class StoryViewModel(private val storyRepository: StoryRepository) : ViewModel() {
     private val _toastText = MutableLiveData<String?>()
 
-    val listStory: LiveData<List<StoryItem?>?> = _listStory
     val toastText: LiveData<String?> = _toastText
 
-    init {
-        getPagesStories()
+    fun getPagesStories(): LiveData<PagingData<StoryItem>> {
+        return storyRepository.getPagesStories().cachedIn(viewModelScope)
     }
 
-    fun getPagesStories(): LiveData<PagingData<StoryItem>> {
-        return storyRepository.getPagesStory().cachedIn(viewModelScope)
-    }
     fun logout() {
         storyRepository.logout()
     }

@@ -9,7 +9,7 @@ import com.example.storyapp.api.StoryItem
 @Database(
     entities = [StoryItem::class, RemoteKeys::class],
     version = 2,
-    exportSchema = true
+    exportSchema = false
 )
 abstract class StoryDatabase : RoomDatabase() {
 
@@ -27,7 +27,7 @@ abstract class StoryDatabase : RoomDatabase() {
                     context.applicationContext,
                     StoryDatabase::class.java,
                     "story_database"
-                )   .fallbackToDestructiveMigration()
+                ).fallbackToDestructiveMigration()
                     .build()
                     .also { instance = it }
             }
